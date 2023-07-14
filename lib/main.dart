@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 import 'main_controller.dart';
 
-// it will initialize our Flutter Firebase app before starting the App
+// it will initialize and connect our Flutter Firebase app before starting the App
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   // initializing MainController
   MainController mainController = Get.put(MainController());
 
-  //On App Starts Checking is a User Signed in or not
+  //On App Starts, Checking is a User Signed in or not
   @override
   void initState() {
     super.initState();
@@ -51,6 +51,9 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Firebase'),
         ),
+        // if User already Signed in then User will Redirected to HomePage
+        // if User not Signed in, then User will Redirected to SignIn Page
+        // where you can SignIn a user and also can go to RegisterPage to Register as a New User
         body:
             mainController.isSignedIn.value ? const HomePage() : const SignIn(),
       ),

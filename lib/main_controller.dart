@@ -8,23 +8,28 @@ class MainController extends GetxController {
   var isSignedIn = false.obs;
 
   // Method for setting the isSignedIn variable to true
-
+  // if ( isSignedIn=true ) THEN User goes to HomePage
   void signedIn() {
     isSignedIn.value = true;
   }
 
   // Method for setting the isSignedIn variable to false
+  // if ( isSignedIn=false ) THEN User goes to SignIn Page
   void signedOut() {
     isSignedIn.value = false;
   }
 
+  // On App Starts, Checking is a User Signed in or not
+  // and this method will automatically called everytime when a User SignIn OR SignOut
   void checkUser() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
+        // redirecting to SignIn screen
         signedOut();
       } else {
         print('User is signed in!');
+        // redirecting to HomePage screen
         signedIn();
       }
     });
