@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// it will initialize our Flutter Firebase app before starting the App
+import 'package:firebase_auth/firebase_auth.dart';
 
+// it will initialize our Flutter Firebase app before starting the App
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
