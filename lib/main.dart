@@ -5,6 +5,8 @@ import 'firebase_options.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:get/get.dart';
+
 // it will initialize our Flutter Firebase app before starting the App
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    print('object');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
