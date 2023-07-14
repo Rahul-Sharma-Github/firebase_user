@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print('object');
+    print('initState() called.');
   }
 
   @override
