@@ -28,12 +28,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // initializing MainController
   MainController mainController = Get.put(MainController());
+
+  //On App Starts Checking is a User Signed in or not
   @override
   void initState() {
     super.initState();
-
-    print('initState() called.');
+    mainController.checkUser();
   }
 
   @override
