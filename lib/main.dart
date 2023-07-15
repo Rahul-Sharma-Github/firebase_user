@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
@@ -60,14 +60,16 @@ class _MyAppState extends State<MyApp> {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Firebase'),
-        ),
         // if User already Signed in then User will Redirected to HomePage
         // if User not Signed in, then User will Redirected to SignIn Page
         // where you can SignIn a user and also can go to RegisterPage to Register as a New User
-        body:
-            mainController.isSignedIn.value ? const HomePage() : const SignIn(),
+        body: Obx(
+          () => SafeArea(
+            child: mainController.isSignedIn.value
+                ? const HomePage()
+                : const SignIn(),
+          ),
+        ),
       ),
     );
   }
