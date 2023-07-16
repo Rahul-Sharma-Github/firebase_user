@@ -1,13 +1,201 @@
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
+
+import 'package:firebase_user/pages/sign_In/screen/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../sign_In/screen/authentication.dart';
+import '../controller/signup_controller.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Sign Up Screen'),
+    SignUpController signUpController = Get.put(SignUpController());
+
+    // initializing the FirebaseAuthenticationController
+    FirebaseAuthenticationController authenticationController =
+        Get.put(FirebaseAuthenticationController());
+
+    // global form key
+    GlobalKey<FormState> formKeySignUp = GlobalKey<FormState>();
+
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  'Sign Up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Text(
+                  'To continue, Sign Up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+                // Email Field
+                Form(
+                  key: formKeySignUp,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: TextFormField(
+                          controller: signUpController.userNameController.value,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'User Name',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your User Name !';
+                            }
+                            return null;
+                          },
+                          onSaved: (newValue) {
+                            signUpController.userName.value = newValue!;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: TextFormField(
+                          controller: signUpController.emailController.value,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Email !';
+                            } else if (!value.contains('@')) {
+                              return 'please enter a valid email';
+                            }
+                            return null;
+                          },
+                          onSaved: (newValue) {
+                            signUpController.email.value = newValue!;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      // Password Field
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: TextFormField(
+                          controller: signUpController.passwordController.value,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Password',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'please enter your password';
+                            } else if (value.length < 6) {
+                              return 'Password must be 6 character long !';
+                            }
+                            return null;
+                          },
+                          onSaved: (newValue) {
+                            signUpController.password.value = newValue!;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (formKeySignUp.currentState!.validate()) {
+                        formKeySignUp.currentState?.save();
+                        print('Form is Valid.');
+                        print(signUpController.userName.value);
+                        print(signUpController.email.value);
+                        print(signUpController.password.value);
+
+                        // creating user
+                        authenticationController.createUser(
+                          signUpController.email.value.toString(),
+                          signUpController.password.value.toString(),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 20),
+                    child: Row(
+                      children: [
+                        const Text("Already have an account?"),
+                        InkWell(
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                          onTap: () {
+                            Get.to(() => const SignIn());
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

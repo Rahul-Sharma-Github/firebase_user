@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_user/pages/sign_In/screen/sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,12 +12,13 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text('Home Page'),
+            const Text('Home Page'),
             ElevatedButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                Get.to(() => const SignIn());
               },
-              child: Text('Sign Out'),
+              child: const Text('Sign Out'),
             )
           ],
         ),

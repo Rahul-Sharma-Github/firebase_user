@@ -6,9 +6,6 @@ class SignInController extends GetxController {
   var emailTextController = TextEditingController().obs;
   var passwordTextController = TextEditingController().obs;
 
-  // global form key
-  var formKey = GlobalKey<FormState>().obs;
-
   // variable to store email and password on Form Save
   var email = ''.obs;
   var password = ''.obs;
