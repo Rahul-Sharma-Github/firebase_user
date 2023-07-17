@@ -155,6 +155,7 @@ class SignUp extends StatelessWidget {
 
                         // creating user
                         authenticationController.createUser(
+                          signUpController.userName.value.toString(),
                           signUpController.email.value.toString(),
                           signUpController.password.value.toString(),
                         );

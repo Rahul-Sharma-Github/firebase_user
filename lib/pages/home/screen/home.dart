@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
                 Get.to(() => const SignIn());
               },
               child: const Text('Sign Out'),
-            )
+            ),
           ],
         ),
       ),

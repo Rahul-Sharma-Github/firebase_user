@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import '../../../main_controller.dart';
 import '../../sign_Up/controller/signup_controller.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FirebaseAuthenticationController extends GetxController {
   // using signInController here
   SignInController signInController = Get.put(SignInController());
@@ -18,13 +20,16 @@ class FirebaseAuthenticationController extends GetxController {
   MainController mainController = Get.put(MainController());
 
   // Method for Creating & Storing User Email and Password in Firebase Authentication
-  Future createUser(String email, String password) async {
+  Future createUser(String name, String email, String password) async {
     try {
       final UserCredential credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
       Get.snackbar('Firebase', 'User Account Created Successfully !');
       print(credential);
+      final uid = credential.user?.uid;
+      // Storing User Account Data to Cloud Firestore
+      saveUser(name, email, uid);
       resetSignUpField();
       Get.to(() => const HomePage());
     } on FirebaseAuthException catch (e) {
@@ -77,5 +82,15 @@ class FirebaseAuthenticationController extends GetxController {
 
     signInController.emailTextController.value.clear();
     signInController.passwordTextController.value.clear();
+  }
+
+  // Method for storing user account information to cloud firestore
+  Future saveUser(String name, email, uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set({'name': name, 'email': email});
+
+    Get.snackbar('Firebase', 'User Account Data Stored in Database !');
   }
 }
