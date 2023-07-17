@@ -12,13 +12,14 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // initializing the SignUpController
     SignUpController signUpController = Get.put(SignUpController());
 
     // initializing the FirebaseAuthenticationController
     FirebaseAuthenticationController authenticationController =
         Get.put(FirebaseAuthenticationController());
 
-    // global form key
+    // global form key for Sign Up Form
     GlobalKey<FormState> formKeySignUp = GlobalKey<FormState>();
 
     return Scaffold(
@@ -30,6 +31,7 @@ class SignUp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Header Part
                 const SizedBox(
                   height: 20,
                 ),
@@ -51,11 +53,13 @@ class SignUp extends StatelessWidget {
                 const SizedBox(
                   height: 80,
                 ),
-                // Email Field
+
+                // Form for Sign Up Process
                 Form(
                   key: formKeySignUp,
                   child: Column(
                     children: [
+                      // User Name Field
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
                         child: TextFormField(
@@ -78,6 +82,8 @@ class SignUp extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
+
+                      // Email Field
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
                         child: TextFormField(
@@ -99,9 +105,11 @@ class SignUp extends StatelessWidget {
                           },
                         ),
                       ),
+
                       const SizedBox(
                         height: 20,
                       ),
+
                       // Password Field
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -131,6 +139,8 @@ class SignUp extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
+
+                // Sign Up Button
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   child: ElevatedButton(
@@ -146,6 +156,9 @@ class SignUp extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      // checking if the Sign Up Form Valid or Not ?
+                      // if valid then Saving the form
+                      // and Creating a New User Account
                       if (formKeySignUp.currentState!.validate()) {
                         formKeySignUp.currentState?.save();
                         print('Form is Valid.');
@@ -153,7 +166,7 @@ class SignUp extends StatelessWidget {
                         print(signUpController.email.value);
                         print(signUpController.password.value);
 
-                        // creating user
+                        // Creating user through Firebase Authentication Feature
                         authenticationController.createUser(
                           signUpController.userName.value.toString(),
                           signUpController.email.value.toString(),
@@ -167,6 +180,8 @@ class SignUp extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Route to Sign In/ Log In Form
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

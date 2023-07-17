@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
     FirebaseAuthenticationController authenticationController =
         Get.put(FirebaseAuthenticationController());
 
-    // global form key
+    // global form key for Sign In Form
     GlobalKey<FormState> formKeySignIn = GlobalKey<FormState>();
 
     return Scaffold(
@@ -31,6 +31,7 @@ class SignIn extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Header Part
                 const SizedBox(
                   height: 20,
                 ),
@@ -52,11 +53,13 @@ class SignIn extends StatelessWidget {
                 const SizedBox(
                   height: 80,
                 ),
-                // Email Field
+
+                // Sign In Form
                 Form(
                   key: formKeySignIn,
                   child: Column(
                     children: [
+                      // Email Field
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
                         child: TextFormField(
@@ -79,9 +82,11 @@ class SignIn extends StatelessWidget {
                           },
                         ),
                       ),
+
                       const SizedBox(
                         height: 20,
                       ),
+
                       // Password Field
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -112,6 +117,8 @@ class SignIn extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+
+                // Remember Me checkbox & Forgot Password
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,9 +151,12 @@ class SignIn extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 const SizedBox(
                   height: 40,
                 ),
+
+                // Log In Button
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   child: ElevatedButton(
@@ -162,12 +172,16 @@ class SignIn extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      // checking if the Sign In Form Valid or Not ?
+                      // if valid then Saving the form
+                      // and Login with the Email and Password
                       if (formKeySignIn.currentState!.validate()) {
                         formKeySignIn.currentState?.save();
                         print('Form is Valid.');
                         print(signinController.email.value);
                         print(signinController.password.value);
 
+                        // Signing In the User Account through Firebase Authentication Feature
                         authenticationController.signInUser(
                           signinController.email.value.toString(),
                           signinController.password.value.toString(),
@@ -180,6 +194,8 @@ class SignIn extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Route to Sign Up / Register Form
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

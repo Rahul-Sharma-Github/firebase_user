@@ -28,9 +28,13 @@ class FirebaseAuthenticationController extends GetxController {
       Get.snackbar('Firebase', 'User Account Created Successfully !');
       print(credential);
       final uid = credential.user?.uid;
+
       // Storing User Account Data to Cloud Firestore
       saveUser(name, email, uid);
+
+      // field reset
       resetSignUpField();
+
       Get.to(() => const HomePage());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -84,7 +88,10 @@ class FirebaseAuthenticationController extends GetxController {
     signInController.passwordTextController.value.clear();
   }
 
+  /// Firebase Cloud Firestore Logics
+
   // Method for storing user account information to cloud firestore
+  // storing data according to uid of that user account
   Future saveUser(String name, email, uid) async {
     await FirebaseFirestore.instance
         .collection('users')
