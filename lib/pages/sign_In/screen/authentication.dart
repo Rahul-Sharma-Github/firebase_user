@@ -69,6 +69,7 @@ class FirebaseAuthenticationController extends GetxController {
       Get.snackbar('Firebase', 'User Signed In !');
       print(credential);
       resetSignInField();
+
       Get.to(() => const HomePage());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
