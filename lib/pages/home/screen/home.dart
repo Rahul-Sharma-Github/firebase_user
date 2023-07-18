@@ -49,16 +49,18 @@ class _HomePageState extends State<HomePage> {
                       if (!snapshot.hasData) {
                         return const CircularProgressIndicator();
                       }
-                      var document = snapshot.data!;
+                      late var document = snapshot.data;
                       return Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Hello, ${document["name"]} !'),
+                            child:
+                                Text('Hello, ${document?.data()?["name"]} !'),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('Your Email =  ${document["email"]}'),
+                            child: Text(
+                                'Your Email =  ${document?.data()?["email"]}'),
                           ),
                         ],
                       );
@@ -111,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.red[400]),
+                            MaterialStateProperty.all(Colors.red[600]),
                       ),
                       onPressed: () async {
                         await FirebaseFirestore.instance
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                               onError: (e) =>
                                   print('Error updating document = $e'),
                             );
-                        Get.to(() => const SignIn());
+                        // Get.to(() => const SignIn());
                       },
                       child: const Text(
                         'Delete Account Data',
