@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -100,6 +100,34 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: const Text(
                         'Delete Account',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ),
+
+                  // Button to Delete the Currently Signed In User's data in Database
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 45),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.red[400]),
+                      ),
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser?.uid)
+                            .delete()
+                            .then(
+                              (value) => Get.snackbar(
+                                  'Firebase', 'Account data deleted.'),
+                              onError: (e) =>
+                                  print('Error updating document = $e'),
+                            );
+                        Get.to(() => const SignIn());
+                      },
+                      child: const Text(
+                        'Delete Account Data',
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
