@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_user/pages/home/screen/home.dart';
 import 'package:firebase_user/pages/sign_In/controller/signin_controller.dart';
@@ -7,8 +8,6 @@ import 'package:get/get.dart';
 
 import '../../../main_controller.dart';
 import '../../sign_Up/controller/signup_controller.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthenticationController extends GetxController {
   // using signInController here
@@ -69,7 +68,6 @@ class FirebaseAuthenticationController extends GetxController {
       Get.snackbar('Firebase', 'User Signed In !');
       print(credential);
       resetSignInField();
-
       Get.to(() => const HomePage());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
