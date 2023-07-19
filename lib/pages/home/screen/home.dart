@@ -6,6 +6,8 @@ import 'package:firebase_user/pages/sign_In/screen/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../sign_In/screen/authentication.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -14,6 +16,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // initializing FirebaseAuthenticationController
+  FirebaseAuthenticationController authenticationController =
+      Get.put(FirebaseAuthenticationController());
+
   @override
   Widget build(BuildContext context) {
     // if User is signed in then user cannot go back
@@ -80,6 +86,7 @@ class _HomePageState extends State<HomePage> {
                               MaterialStateProperty.all(Colors.orange[400])),
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
+                        authenticationController.resetSignInField();
                         Get.to(() => const SignIn());
                       },
                       child: const Text(
