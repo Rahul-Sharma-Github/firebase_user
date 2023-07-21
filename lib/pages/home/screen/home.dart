@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_user/pages/sign_In/screen/sign_in.dart';
+import 'package:firebase_user/pages/users/screen/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +54,9 @@ class _HomePageState extends State<HomePage> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return const CircularProgressIndicator();
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
                       late var document = snapshot.data;
                       return Column(
@@ -137,6 +140,28 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: const Text(
                         'Delete Account Data',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 100,
+                  ),
+
+                  // Button to Go to Users Page
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 45),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.deepPurple),
+                      ),
+                      onPressed: () {
+                        Get.to(() => const UsersPage());
+                      },
+                      child: const Text(
+                        'Total App Users',
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
