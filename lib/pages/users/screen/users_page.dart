@@ -15,6 +15,7 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        // accessing currently signed in user's email and name which is stored inside firestore database
         child: StreamBuilder(
           stream: data.snapshots(),
           builder: (context, snapshot) {
